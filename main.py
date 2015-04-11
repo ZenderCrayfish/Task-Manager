@@ -10,6 +10,8 @@ USER = users.get_current_user()
 
 @app.route('/')
 def index ():
+	global USER
+	USER = users.get_current_user()
 	if USER:
 		return redirect(url_for('home'))
 	else:
