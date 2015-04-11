@@ -1,22 +1,25 @@
-from flask import Flask
+from flask import Flask, redirect, render_template, url_for
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-import os
-import jinja2
+from google.appengine.api import users
 
-JINJA_ENV = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-    extensions=['jinja2.ext.autoescape'],
-    autoescape=True)
+import os
+
+USER = users.get_current_user()
 
 @app.route('/')
-def index():
-    template = JINJA_ENV.get_template('templates/index.tmpl');
-    return template.render();
+def index ():
+	if USER:
+		return redirect(url_for('home'))
+	else:
+		return redirect(users.create_login_url( url_for('index') ))
 
+@app.route('/home')
+def home():
+	return render_template('home.tmpl', user=USER)
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found (e):
     """Return a custom 404 error."""
     return 'Sorry, nothing at this URL.', 404
