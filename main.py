@@ -2,11 +2,17 @@ from flask import Flask
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
+import jinja2
+
+JINJA_ENV = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
 
 @app.route('/')
 def index():
-    """Return a friendly HTTP greeting."""
-    return 'Hello World!'
+    template = JINJA_ENV.get_template('static/template/index.tmpl');
+    return template.render();
 
 
 @app.errorhandler(404)
