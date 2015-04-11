@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+	<head>
+		{% block head %}
+			<link rel="stylesheet" href="styles/base.css">
+			<title>{% block title %}Task Manager{% endblock %}</title>
+		{% endblock %}
+	</head>
+	<body>
+		{% block content %}
+			<p>Hello World!</p>
+		{% endblock %}
+	</body>
+</html>
+{% endautoescape %}

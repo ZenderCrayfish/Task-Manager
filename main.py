@@ -2,6 +2,7 @@ from flask import Flask
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
+import os
 import jinja2
 
 JINJA_ENV = jinja2.Environment(
@@ -11,7 +12,7 @@ JINJA_ENV = jinja2.Environment(
 
 @app.route('/')
 def index():
-    template = JINJA_ENV.get_template('static/template/index.tmpl');
+    template = JINJA_ENV.get_template('templates/index.tmpl');
     return template.render();
 
 
